@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Board from './Board';
 
 function Game(props) {
@@ -8,9 +8,11 @@ function Game(props) {
     let current = history[step];
     let winner = calculateWinner(current.squares);
 
+
+
     const handleClick = (i) => {
         const newHistory = history.slice(0, step + 1);
-         current = newHistory[newHistory.length - 1];
+        current = newHistory[newHistory.length - 1];
         const squares = current.squares.slice();
 
         if (calculateWinner(squares) || squares[i]) {
@@ -62,11 +64,16 @@ function Game(props) {
     });
 
     let status;
-        if (winner) {
-            status = "Winner" + winner;
-        } else {
-            status = `Next player: ${xIsNext ? "X" : "O"}`;
+    if (winner) {
+        status = "Winner" + winner;
+    } else {
+        status = `Next player: ${xIsNext ? "X" : "O"}`;
+    }
+    useEffect(() => {
+        if(winner){
+            props.setGameOver(true);
         }
+    },[winner])
 
     return(
         <div className="game">
