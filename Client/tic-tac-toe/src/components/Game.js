@@ -73,6 +73,9 @@ function Game(props) {
     useEffect(() => {
         if(winner){
             props.setGameOver(true);
+            props.stopGameTime();
+        }else{
+            props.startGameTime();
         }
     },[winner])
 
