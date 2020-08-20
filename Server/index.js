@@ -21,6 +21,22 @@ app.get("/api/v1/records", (req, res) => {
 });
 
 app.post("/api/v1/records", (req, res) => {
+
+    fs.readFile('./records.json', (err, data) => {
+        if(err){
+            throw err;
+        }
+        const dataArr = JSON.parse(data);
+        dataArr.push(req.body);
+        console.log(dataArr)
+        fs.writeFile('./records.json', JSON.stringify(dataArr), (err) => {
+            if(err){
+                throw err;
+            }
+            res.send('OK')
+        })
+    });
+
     
 });
 
