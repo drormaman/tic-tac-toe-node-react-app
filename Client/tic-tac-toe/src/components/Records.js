@@ -4,7 +4,6 @@ function Records(props) {
     const [records, setRecords] = useState([]);
 
     useEffect(() => {
-        console.log("changed to", props.isGameOver);
         fetch("/api/v1/records")
             .then((res) => res.json())
             .then((res) => {

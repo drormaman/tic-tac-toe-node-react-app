@@ -12,12 +12,10 @@ function App() {
 
     const startGameTime = () => {
         const date = new Date();
-        console.log("start", date);
         setGameStartTime(date);
     };
     const stopGameTime = () => {
         const date = new Date();
-        console.log("End", date);
         setGameEndTime(date);
     };
     function calculateGameTime() {
