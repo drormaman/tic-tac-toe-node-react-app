@@ -14,6 +14,7 @@ function Game(props) {
         const newHistory = history.slice(0, step + 1);
         current = newHistory[newHistory.length - 1];
         const squares = current.squares.slice();
+        props.setGameOver(false);
 
         if (calculateWinner(squares) || squares[i]) {
             return;

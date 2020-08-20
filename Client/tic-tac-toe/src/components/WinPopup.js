@@ -8,40 +8,59 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Button from '@material-ui/core/Button';
 
 function WinPopup(props) {
-    console.log('hellor')
     const [open, setOpen] = useState(props.open);
+    const [playerName, setPlayerName] = useState();
     useEffect(() => {setOpen(props.open)},[props.open]);
 
     const handleClose = () => {
         setOpen(false);
     };
+
+    const submitName = () => {
+        const newPlayerRecord = {
+            "id": 1,
+            "winnerName": playerName,
+            "date": "2020-08-01 23:30:43"
+        }
+        fetch('http://localhost:8080/api/v1/records',
+        {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newPlayerRecord)});
+        handleClose();
+    }
     return (
         <Dialog
             open={open}
             onClose={handleClose}
             aria-labelledby="form-dialog-title"
         >
-            <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+            <DialogTitle id="form-dialog-title">You Won!!!</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    To subscribe to this website, please enter your email
-                    address here. We will send updates occasionally.
+                    Please enter your name.
                 </DialogContentText>
                 <TextField
                     autoFocus
                     margin="dense"
                     id="name"
-                    label="Email Address"
-                    type="email"
+                    label="Full name"
+                    type="text"
                     fullWidth
+                    value={playerName}
+                    onChange={({target}) => {
+                        setPlayerName(target.value);
+                    }}
                 />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={handleClose} color="primary">
-                    Subscribe
+                <Button onClick={submitName} color="primary">
+                    Submit
                 </Button>
             </DialogActions>
         </Dialog>
