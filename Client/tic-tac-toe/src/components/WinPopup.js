@@ -9,28 +9,16 @@ import Button from '@material-ui/core/Button';
 
 function WinPopup(props) {
     const [open, setOpen] = useState(props.open);
-    const [playerName, setPlayerName] = useState();
     useEffect(() => {setOpen(props.open)},[props.open]);
 
     const handleClose = () => {
         setOpen(false);
     };
-
-    const submitName = () => {
-        const newPlayerRecord = {
-            "id": 1,
-            "winnerName": playerName,
-            "date": "2020-08-01 23:30:43"
-        }
-        fetch('http://localhost:8080/api/v1/records',
-        {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newPlayerRecord)});
+    const submitHandler = () =>{
+        props.onSubmit();
         handleClose();
     }
+    
     return (
         <Dialog
             open={open}
@@ -49,9 +37,9 @@ function WinPopup(props) {
                     label="Full name"
                     type="text"
                     fullWidth
-                    value={playerName}
+                    value={props.playerName}
                     onChange={({target}) => {
-                        setPlayerName(target.value);
+                        props.changeName(target.value);
                     }}
                 />
             </DialogContent>
@@ -59,7 +47,7 @@ function WinPopup(props) {
                 <Button onClick={handleClose} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={submitName} color="primary">
+                <Button onClick={submitHandler} color="primary">
                     Submit
                 </Button>
             </DialogActions>
